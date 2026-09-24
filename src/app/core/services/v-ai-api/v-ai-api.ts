@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { environment } from '@environments/environment';
@@ -8,7 +7,6 @@ import { environment } from '@environments/environment';
   providedIn: 'root'
 })
 export class VAiApi {
-  private http = inject(HttpClient);
   private genAI = new GoogleGenerativeAI(environment.geminiApiKey);
 
   sendMessageToGemini(prompt: string): Observable<string> {
