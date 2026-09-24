@@ -25,6 +25,7 @@ export class App {
   private brandIconService = inject(VBrandIcon);
   showTopMenu = signal<boolean>(false);
   isMenuPinned = signal<boolean>(false);
+  currentYear = new Date().getFullYear();
 
   constructor() {
     this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa-solid');
