@@ -1,8 +1,10 @@
 export const environment = {
   production: true,
-  geminiApiKey: 'SUA_CHAVE_GEMINI_AQUI',
+  geminiApiKey: 'SUA_CHAVE_OPENAI_AQUI',
   chatGptApiKey: 'SUA_CHAVE_OPENAI_AQUI',
   copilotApiKey: 'SUA_CHAVE_COPILOT_AQUI',
-  apiUrl: 'api',
+  chatApiUrl: 'https://angular-catalog-vehicles-api.vercel.app/api/chat',
+  useChatApi: false,
+  catalogApiUrl: 'api',
   useMock: true
 };

@@ -8,7 +8,7 @@ import { environment } from '@environments/environment';
 @Service()
 export class VCatalogApi implements VCatalogBaseApi {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/vehicles`;
+  private apiUrl = `${environment.catalogApiUrl}/vehicles`;
 
   getVCatalog(): Observable<VCatalog[]> {
      return this.http.get<VCatalog[]>(this.apiUrl);
