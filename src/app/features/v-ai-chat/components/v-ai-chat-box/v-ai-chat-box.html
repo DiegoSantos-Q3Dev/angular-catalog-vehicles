@@ -56,11 +56,11 @@
         <mat-icon fontSet="fa-brands" fontIcon="fa-google" />
         <span>Gemini</span>
       </button>
-      <button mat-menu-item (click)="selectAi('ChatGPT')" [class.active-model]="aiName() === 'ChatGPT'">
+      <button mat-menu-item (click)="selectAi('ChatGPT')" [class.active-model]="aiName() === 'ChatGPT'" [disabled]="true" title="Implementação em breve...">
         <mat-icon fontSet="fa-brands" fontIcon="fa-openai" />
         <span>ChatGPT</span>
       </button>
-      <button mat-menu-item (click)="selectAi('Copilot')" [class.active-model]="aiName() === 'Copilot'">
+      <button mat-menu-item (click)="selectAi('Copilot')" [class.active-model]="aiName() === 'Copilot'" [disabled]="true" title="Implementação em breve...">
         <mat-icon fontSet="fa-brands" fontIcon="fa-microsoft" />
         <span>Copilot</span>
       </button>

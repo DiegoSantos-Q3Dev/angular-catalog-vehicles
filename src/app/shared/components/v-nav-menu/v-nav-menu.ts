@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, HostListener, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -37,11 +37,6 @@ export class VNavMenu implements OnInit, OnDestroy {
   items = input<readonly NavItem[]>(DEFAULT_NAV_ITEMS);
   expandedRoutes = signal<ReadonlySet<string>>(new Set());
   hoveredRoutes = signal<ReadonlySet<string>>(new Set());
-  private readonly resetExpansionOnModeChange = effect(() => {
-    this.interactionMode();
-    this.expandedRoutes.set(new Set());
-    this.hoveredRoutes.set(new Set());
-  });
 
   ngOnInit() {
     this.updateExpandedRoutes(this.router.url);

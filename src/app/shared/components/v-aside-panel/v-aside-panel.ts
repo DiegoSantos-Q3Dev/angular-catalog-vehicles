@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, HostListener, inject, input, model } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, HostListener, inject, input, model, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from "@angular/material/icon";
 
@@ -12,12 +12,13 @@ import { MatIconModule } from "@angular/material/icon";
     '[class.collapse-to-button]': 'collapseToButton()',
     '[class.edge-toggle]': 'togglePlacement() === \'edge\'',
     '[class.right]': 'asidePanelOnRight()',
+    '[class.fadeInPanel]': 'asidePanelFadeIn()'
   },
   selector: 'v-aside-panel',
   styleUrl: './v-aside-panel.scss',
   templateUrl: './v-aside-panel.html',
 })
-export class VAsidePanel {
+export class VAsidePanel implements AfterViewInit {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   title = input<string>('');
   icon = input<string>('');
@@ -30,8 +31,10 @@ export class VAsidePanel {
   hideContentWhenCollapsed = input(true);
   togglePlacement = input<'header' | 'edge'>('header');
   toggleIcons = input<{ open: string; closed: string }>();
+  fadeInPanel = input(false);
   isOpen = model<boolean>(false);
   isPinned = model(false);
+  isReady = signal<boolean>(false);
   titleIconRight = computed(() => this.position() === 'right');
   asidePanelToggleButtonIcon = computed(() => {
     const icons = this.toggleIcons();
@@ -70,6 +73,11 @@ export class VAsidePanel {
       : 'Modo mouse: passe o mouse para abrir o menu';
   });
   asidePanelOnRight = computed(() => this.position() === 'right');
+  asidePanelFadeIn = computed(() => this.fadeInPanel());
+
+  ngAfterViewInit() {
+    setTimeout(() => this.isReady.set(true), 50);
+  }
 
   toggle() {
     this.isOpen.update(value => !value);

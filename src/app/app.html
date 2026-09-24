@@ -1,18 +1,21 @@
 <div class="v-app-container" [class.v-side-navigation]="!showTopMenu()">
   @if (!showTopMenu()) {
-    <v-aside-panel class="v-aside-nav" position="left"
-      [hoverToOpen]="true" [clickToPin]="true" [showToggleWhenCollapsed]="false"
+    <v-aside-panel
+      class="v-aside-nav"
+      position="left"
+      [hoverToOpen]="true"
+      [clickToPin]="true"
+      [showToggleWhenCollapsed]="false"
       [hideContentWhenCollapsed]="false"
       [(isPinned)]="isMenuPinned"
       [togglePlacement]="'edge'"
       [toggleIcons]="{ open: 'mouse_lock', closed: 'mouse' }"
       [isOpen]="false">
-      <div aside-panel-header class="v-aside-brand">
-        <img class="v-aside-brand-logo" src="images/logo.png" alt="V Catálogo">
-        <span class="v-aside-brand-label">V Catálogo</span>
-      </div>
-      <v-nav-menu placement="side"
-        [interactionMode]="isMenuPinned() ? 'click' : 'hover'" />
+        <div aside-panel-header class="v-aside-brand">
+          <img class="v-aside-brand-logo" src="images/logo.png" alt="V Catálogo">
+          <span class="v-aside-brand-label">V Catálogo</span>
+        </div>
+        <v-nav-menu placement="side" [interactionMode]="isMenuPinned() ? 'click' : 'hover'" />
     </v-aside-panel>
   }
 
@@ -22,8 +25,14 @@
       <main class="v-app-content">
         <router-outlet />
       </main>
-      <v-aside-panel class="v-aside-right" title="HUB IA" icon="smart_toy" position="right" [collapseToButton]="true">
-        <v-ai-chat-page />
+      <v-aside-panel
+        class="v-aside-right"
+        title="HUB IA" icon="smart_toy"
+        position="right"
+        [collapseToButton]="true"
+        [isOpen]="false"
+        [fadeInPanel]="true">
+          <v-ai-chat-page />
       </v-aside-panel>
     </div>
 

@@ -1,42 +1,44 @@
-<aside class="v-aside-panel" [class.collapsed]="!isOpen()" [class.right]="asidePanelOnRight()"
-  (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()"
-  (click)="handlePanelClick()"
-  [attr.title]="!isOpen() ? asidePanelInteractionTitle() : null">
-  <div class="v-aside-panel-header">
-    <div class="v-aside-panel-heading">
-      <ng-content select="[aside-panel-header]" />
-      @if (icon() && isOpen() && !titleIconRight()) {
-        <mat-icon class="material-symbols-outlined">{{ icon() }}</mat-icon>
-      }
-      @if (title()) {
-        <h3>{{ title() }}</h3>
-      }
-      @if (icon() && isOpen() && titleIconRight()) {
-        <mat-icon class="material-symbols-outlined">{{ icon() }}</mat-icon>
+@if (isReady()) {
+  <aside class="v-aside-panel" [class.fadeInPanel]="asidePanelFadeIn()"  [class.collapsed]="!isOpen()" [class.right]="asidePanelOnRight()"
+    (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()"
+    (click)="handlePanelClick()"
+    [attr.title]="!isOpen() ? asidePanelInteractionTitle() : null">
+    <div class="v-aside-panel-header">
+      <div class="v-aside-panel-heading">
+        <ng-content select="[aside-panel-header]" />
+        @if (icon() && isOpen() && !titleIconRight()) {
+          <mat-icon class="material-symbols-outlined">{{ icon() }}</mat-icon>
+        }
+        @if (title()) {
+          <h3>{{ title() }}</h3>
+        }
+        @if (icon() && isOpen() && titleIconRight()) {
+          <mat-icon class="material-symbols-outlined">{{ icon() }}</mat-icon>
+        }
+      </div>
+
+      @if (showToggle() && (isOpen() || showToggleWhenCollapsed())) {
+        <button mat-icon-button
+        (click)="handleToggleClick()"
+        [attr.aria-label]="asidePanelToggleButtonLabel()"
+        [attr.title]="asidePanelToggleButtonTitle()"
+        [attr.aria-pressed]="clickToPin() ? isPinned() : null">
+        @if (clickToPin()) {
+          @if (isPinned()) {
+            <mat-icon class="material-symbols-outlined v-aside-toggle-icon">mouse_lock</mat-icon>
+          } @else {
+            <mat-icon class="material-symbols-outlined v-aside-toggle-icon">mouse</mat-icon>
+          }
+        } @else {
+          <mat-icon class="material-symbols-outlined v-aside-toggle-icon"
+            [fontIcon]="asidePanelToggleButtonIcon()" />
+        }
+        </button>
       }
     </div>
 
-    @if (showToggle() && (isOpen() || showToggleWhenCollapsed())) {
-      <button mat-icon-button
-      (click)="handleToggleClick()"
-      [attr.aria-label]="asidePanelToggleButtonLabel()"
-      [attr.title]="asidePanelToggleButtonTitle()"
-      [attr.aria-pressed]="clickToPin() ? isPinned() : null">
-      @if (clickToPin()) {
-        @if (isPinned()) {
-          <mat-icon class="material-symbols-outlined v-aside-toggle-icon">mouse_lock</mat-icon>
-        } @else {
-          <mat-icon class="material-symbols-outlined v-aside-toggle-icon">mouse</mat-icon>
-        }
-      } @else {
-        <mat-icon class="material-symbols-outlined v-aside-toggle-icon"
-          [fontIcon]="asidePanelToggleButtonIcon()" />
-      }
-      </button>
-    }
-  </div>
-
-  <div class="v-aside-panel-content" [class.hidden]="!isOpen() && hideContentWhenCollapsed()">
-    <ng-content></ng-content>
-  </div>
-</aside>
+    <div class="v-aside-panel-content" [class.hidden]="!isOpen() && hideContentWhenCollapsed()">
+      <ng-content></ng-content>
+    </div>
+  </aside>
+}

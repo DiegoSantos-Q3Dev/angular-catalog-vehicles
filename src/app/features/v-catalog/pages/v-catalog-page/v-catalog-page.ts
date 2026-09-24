@@ -1,11 +1,10 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { VAsidePanel } from '../../../../shared/components/v-aside-panel/v-aside-panel';
 import { VCatalogCard } from '../../components/v-catalog-card/v-catalog-card';
 import { VGobalSearch } from '../../../../core/services/v-global-search/v-gobal-search';
 import { VCatalogBaseApi } from '../../../../core/services/v-catalog/interface/v-catalog-base-api';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { VCatalogFilterComponent } from '../../components/v-catalog-filter/v-catalog-filter/v-catalog-filter';
 import { VFilter } from '../../../../shared/models/v-filter/v-filter';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -24,7 +23,7 @@ import { VCatalog } from '../../../../core/models/v-catalog/v-catalog';
   styleUrl: './v-catalog-page.scss',
   templateUrl: './v-catalog-page.html',
 })
-export class VCatalogPage {
+export class VCatalogPage implements OnInit {
   private vCatalogApi = inject(VCatalogBaseApi);
   globalSearch = inject(VGobalSearch);
 

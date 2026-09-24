@@ -22,19 +22,16 @@ describe('VToolbar', () => {
   });
 
   it('should toggle the shared menu interaction mode', () => {
-    fixture.componentRef.setInput('isTopMenuPinned', false);
-    let emittedValue = false;
-    component.isTopMenuPinnedChange.subscribe(value => emittedValue = value);
+    component.isTopMenuPinned.set(false);
     expect(component.toggleMenuModeIcon()).toBe('mouse');
 
     component.toggleMenuMode();
 
-    expect(emittedValue).toBe(true);
-    fixture.componentRef.setInput('isTopMenuPinned', true);
+    expect(component.isTopMenuPinned()).toBe(true);
     expect(component.toggleMenuModeIcon()).toBe('mouse_lock');
 
     component.toggleMenuMode();
 
-    expect(emittedValue).toBe(false);
+    expect(component.isTopMenuPinned()).toBe(false);
   });
 });

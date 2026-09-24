@@ -37,6 +37,11 @@
       background-color: #0a004b;
       color: #ffffff;
       border-radius: 16px 16px 4px 16px;
+
+      :host-context(.dark) & {
+        background-color: #1a105c;
+        border: 1px solid rgba(255, 168, 0, 0.2);
+      }
     }
   }
 
@@ -99,8 +104,16 @@
       color: #0a004b;
       transition: background-color 0.2s ease;
 
+      :host-context(.dark) & {
+        color: var(--mat-sys-on-surface);
+      }
+
       &:hover {
         background-color: rgba(10, 0, 75, 0.08);
+
+        :host-context(.dark) & {
+          background-color: rgba(255, 255, 255, 0.08);
+        }
       }
 
       .ai-brand-icon {
@@ -117,6 +130,38 @@
 
 .active-model {
   font-weight: 600;
-  color: #0a004b;
-  background-color: rgba(10, 0, 75, 0.04);
+  color: var(--mat-sys-primary);
+  background-color: var(--mat-sys-surface-container-high);
+  border-radius: 4px;
+  margin: 0 4px;
+
+  :host-context(.dark) & {
+    color: #ffa800;
+    background-color: var(--mat-sys-surface-container-highest);
+  }
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  background-color: var(--mat-sys-surface) !important;
+  color: var(--mat-sys-on-surface) !important;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15) !important;
+
+  .mat-mdc-menu-content {
+    padding: 6px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mat-mdc-menu-item {
+    border-radius: 4px;
+    min-height: 40px;
+    color: var(--mat-sys-on-surface);
+
+    &:hover {
+      background-color: var(--mat-sys-surface-container-highest);
+    }
+  }
 }

@@ -53,20 +53,18 @@
           <mat-icon class="material-symbols-outlined v-toolbar-menu-icon" [fontIcon]="toggleMenuIcon()" />
           <span>{{ toggleMenuLabel() }}</span>
         </button>
-        @if (showTopMenu()) {
-          <button mat-menu-item class="v-icon-btn v-menu-mode-btn"
-            (click)="toggleMenuMode()"
-            [attr.aria-label]="toggleMenuModeLabel()"
-            [attr.title]="toggleMenuModeTitle()"
-            [attr.aria-pressed]="isTopMenuPinned()">
-            @if (isTopMenuPinned()) {
-              <mat-icon class="material-symbols-outlined v-toolbar-menu-icon">mouse_lock</mat-icon>
-            } @else {
-              <mat-icon class="material-symbols-outlined v-toolbar-menu-icon">mouse</mat-icon>
-            }
-            <span>{{ toggleMenuModeLabel()}}</span>
-          </button>
-        }
+        <button mat-menu-item class="v-icon-btn v-menu-mode-btn"
+          (click)="toggleMenuMode()"
+          [attr.aria-label]="toggleMenuModeLabel()"
+          [attr.title]="toggleMenuModeTitle()"
+          [attr.aria-pressed]="isTopMenuPinned()">
+          @if (isTopMenuPinned()) {
+            <mat-icon class="material-symbols-outlined v-toolbar-menu-icon">mouse_lock</mat-icon>
+          } @else {
+            <mat-icon class="material-symbols-outlined v-toolbar-menu-icon">mouse</mat-icon>
+          }
+          <span>{{ toggleMenuModeLabel()}}</span>
+        </button>
       </mat-menu>
     </ng-container>
   </div>

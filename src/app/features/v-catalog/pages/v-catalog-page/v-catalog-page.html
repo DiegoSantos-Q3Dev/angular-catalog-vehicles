@@ -1,7 +1,13 @@
 <div class="v-catalog-page-layout">
   <aside class="v-filters-sidebar">
-    <v-aside-panel title="Filtros" icon="filter_alt" position="left" [collapseToButton]="true">
-      <v-catalog-filter (catalogFilterChanged)="onFilterChanged($event)" />
+    <v-aside-panel
+      title="Filtros"
+      icon="filter_alt"
+      position="left"
+      [collapseToButton]="true"
+      [isOpen]="false"
+      [fadeInPanel]="true">
+        <v-catalog-filter (catalogFilterChanged)="onFilterChanged($event)" />
     </v-aside-panel>
   </aside>
 

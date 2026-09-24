@@ -55,6 +55,11 @@
   transition: width 0.3s ease, padding 0.3s ease;
   position: relative;
 
+  &.fadeInPanel {
+    transition: all 0.3s ease;
+    animation: fadeInPanel 0.3s ease-in-out;
+  }
+
   &.right {
     border-right: none;
     border-left: 1px solid var(--mat-sys-outline-variant);
@@ -220,4 +225,13 @@
   opacity: 1;
   transform: translateX(0);
   transition: opacity 0.18s ease, transform 0.28s ease, visibility 0.28s;
+}
+
+@keyframes fadeInPanel {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

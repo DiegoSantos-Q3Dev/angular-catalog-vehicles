@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { VNavMenu } from "../v-nav-menu/v-nav-menu";
 import { MatButtonModule } from '@angular/material/button';
@@ -28,9 +28,8 @@ export class VToolbar implements OnInit {
   searchService = inject(VGobalSearch);
   showTopMenu = model<boolean>(false);
   isDarkMode = signal<boolean>(false);
-  isTopMenuPinned = input<boolean>(false);
-  isTopMenuPinnedChange = output<boolean>();
-  private readonly menuPinnedState = signal(false);
+  isTopMenuPinned = model<boolean>(false);
+
   toggleThemeLabel = signal<string>('Trocar Tema');
   toggleMenuLabel = signal<string>('Trocar Menu');
   toggleMenuModeLabel = signal<string>('Modo do menu');
@@ -45,8 +44,8 @@ export class VToolbar implements OnInit {
   toggleThemeTitle = computed(() => `${this.isDarkMode() ? 'Claro' : 'Escuro'}`);
   toggleMenuIcon = computed(() => this.showTopMenu() ? 'side_navigation' : 'toolbar');
   toggleMenuTitle = computed(() => `${this.showTopMenu() ? 'Lateral' : 'Topo'}`);
-  toggleMenuModeIcon = computed(() => this.menuPinnedState() ? 'mouse_lock' : 'mouse');
-  toggleMenuModeTitle = computed(() => this.menuPinnedState()
+  toggleMenuModeIcon = computed(() => this.isTopMenuPinned() ? 'mouse_lock' : 'mouse');
+  toggleMenuModeTitle = computed(() => this.isTopMenuPinned()
     ? 'Liberar menu para abrir ao passar o mouse'
     : 'Travar menu para abrir por clique'
   );
@@ -67,9 +66,7 @@ export class VToolbar implements OnInit {
   }
 
   toggleMenuMode() {
-    const nextValue = !this.menuPinnedState();
-    this.menuPinnedState.set(nextValue);
-    this.isTopMenuPinnedChange.emit(nextValue);
+    this.isTopMenuPinned.update(value => !value);
   }
 
   expandSearch() {

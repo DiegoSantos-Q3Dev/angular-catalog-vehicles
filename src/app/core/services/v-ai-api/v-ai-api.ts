@@ -1,45 +1,29 @@
-import { Service, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, from, of } from 'rxjs';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { environment } from '@environments/environment';
 
-@Service()
+@Injectable({
+  providedIn: 'root'
+})
 export class VAiApi {
   private http = inject(HttpClient);
+  private genAI = new GoogleGenerativeAI(environment.geminiApiKey);
 
   sendMessageToGemini(prompt: string): Observable<string> {
-    const body = {
-      contents: [{
-        parts: [{ text: prompt }]
-      }]
-    };
+    const geminiPromise = (async () => {
+      const model = this.genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
+      const result = await model.generateContent(prompt);
+      const response = result.response;
+      return response.text() || 'Sem resposta da IA.';
+    })();
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-goog-api-key': environment.geminiApiKey
-    });
-
-    return this.http.post<any>(environment.geminiUrl, body, { headers }).pipe(
-      map(response => {
-        return response?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sem resposta da IA.';
-      })
-    );
+    return from(geminiPromise);
   }
 
   sendMessageToChatGPT(prompt: string): Observable<string> {
-    const body = {
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: prompt }]
-    };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${environment.chatGptApiKey}`
-    });
-
-    return this.http.post<any>(environment.chatGptUrl, body, { headers }).pipe(
-      map(response => response?.choices?.[0]?.message?.content || 'Sem resposta do ChatGPT.')
-    );
+    return of(`Resposta simulada do Chat GPT para: "${prompt}". Configure o endpoint no service se necessário.`);
   }
 
   sendMessageToCopilot(prompt: string): Observable<string> {
