@@ -1,25 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from, of } from 'rxjs';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { environment } from '@environments/environment';
+import { Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VAiApi {
   private http = inject(HttpClient);
-  private genAI = new GoogleGenerativeAI(environment.geminiApiKey);
 
   sendMessageToGemini(prompt: string): Observable<string> {
-    const geminiPromise = (async () => {
-      const model = this.genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      return response.text() || 'Sem resposta da IA.';
-    })();
-
-    return from(geminiPromise);
+    return this.http.post<{ text: string }>('/api/gemini', { prompt }).pipe(
+      map(response => response?.text || 'Sem resposta da IA.')
+    );
   }
 
   sendMessageToChatGPT(prompt: string): Observable<string> {
