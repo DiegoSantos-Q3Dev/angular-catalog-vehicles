@@ -1,3 +1,8 @@
+import * as dotenv from 'dotenv';
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: '.env.local' });
+}
+
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
@@ -20,13 +25,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const clientSecret = req.headers['x-app-secret'];
-  const serverSecret = process.env.APP_SECRET_KEY;
-
-  if (!clientSecret || clientSecret !== serverSecret) {
-    return res.status(401).json({ error: 'Acesso não autorizado' });
-  }
-
   try {
     const { prompt } = req.body;
 
@@ -40,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || '' });
 
     const result = await model.generateContent(prompt);
     const response = result.response;
